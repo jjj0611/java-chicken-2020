@@ -18,16 +18,15 @@ class OrderTest {
     }
 
     @Test
-    void orderException() {
+    void menuCountException() {
         Order order = new Order();
         Menu menu = MenuRepository.findById(1);
-        assertThatThrownBy(() -> order.add(menu, 100))
+        assertThatThrownBy(() -> order.add(menu, -1))
                 .isInstanceOf(IllegalArgumentException.class);
-
     }
 
     @Test
-    void multipleOrderException() {
+    void orderTotalCountException() {
         Order order = new Order();
         Menu firstMenu = MenuRepository.findById(1);
         Menu secondMenu = MenuRepository.findById(2);
