@@ -1,5 +1,7 @@
 package view;
 
+import domain.pay.PaymentMethod;
+
 import java.util.Scanner;
 
 public class InputView {
@@ -28,9 +30,10 @@ public class InputView {
         return scanner.nextInt();
     }
 
-    public static int inputPaymentMethod(int tableNumber) {
+    public static PaymentMethod inputPaymentMethod(int tableNumber) {
         System.out.println(String.format("## %d번 테이블의 결제를 진행합니다.", tableNumber));
         System.out.println("## 신용카드는 1번, 현금은 2번");
-        return scanner.nextInt();
+        int number = scanner.nextInt();
+        return PaymentMethod.of(number);
     }
 }

@@ -1,7 +1,7 @@
 package view;
 
-import controller.OrderResponseDto;
-import controller.TableResponseDto;
+import controller.dto.OrderResponseDto;
+import controller.dto.TableResponseDto;
 import domain.menu.Menu;
 import domain.price.Price;
 

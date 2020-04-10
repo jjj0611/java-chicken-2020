@@ -13,7 +13,7 @@ public class OrderRepository {
 
     static {
         for (Table table : TableRepository.tables()) {
-            TABLE_ORDERS.put(table, new Order());
+            TABLE_ORDERS.put(table, Order.empty());
         }
     }
 
@@ -29,5 +29,9 @@ public class OrderRepository {
 
     public Order findByTable(Table table) {
         return TABLE_ORDERS.get(table);
+    }
+
+    public void initialize(Table table) {
+        TABLE_ORDERS.put(table, Order.empty());
     }
 }

@@ -1,6 +1,7 @@
 package domain.order;
 
 import domain.menu.Menu;
+import domain.pay.PaymentMethod;
 import domain.price.Price;
 
 import java.util.HashMap;
@@ -14,6 +15,13 @@ public class Order {
     private static final int CHICKEN_DISCOUNT_COUNTS = 10;
 
     private Map<Menu, Integer> menuCount = new HashMap<>();
+
+    private Order() {
+    }
+
+    public static Order empty() {
+        return new Order();
+    }
 
     public void add(Menu menu, int additionalCount) {
         validateMenuCount(menu, additionalCount);
@@ -49,13 +57,10 @@ public class Order {
         }
     }
 
-    public Price calculatePrice(int paymentMethod) {
+    public Price calculatePrice(PaymentMethod paymentMethod) {
         Price totalPrice = sumPrice();
         totalPrice = totalPrice.minus(discountAmount());
-        if (paymentMethod == 2) {
-            totalPrice = totalPrice.multiply(0.95);
-        }
-        return totalPrice;
+        return paymentMethod.getDisCount(totalPrice);
     }
 
     private Price discountAmount() {

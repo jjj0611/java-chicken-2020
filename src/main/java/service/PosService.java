@@ -1,11 +1,12 @@
 package service;
 
-import controller.OrderResponseDto;
-import controller.TableResponseDto;
+import controller.dto.OrderResponseDto;
+import controller.dto.TableResponseDto;
 import domain.menu.Menu;
 import domain.menu.MenuRepository;
 import domain.order.Order;
 import domain.order.OrderRepository;
+import domain.pay.PaymentMethod;
 import domain.price.Price;
 import domain.table.Table;
 import domain.table.TableRepository;
@@ -23,7 +24,7 @@ public class PosService {
         orderRepository.placeOrder(table, menu, menuCount);
     }
 
-    public Price calculatePrice(int tableNumber, int paymentMethod) {
+    public Price calculatePrice(int tableNumber, PaymentMethod paymentMethod) {
         Table table = TableRepository.findById(tableNumber);
         Order order = orderRepository.findByTable(table);
         return order.calculatePrice(paymentMethod);
@@ -44,5 +45,10 @@ public class PosService {
                 .filter(order::hasMenu)
                 .map(menu -> new OrderResponseDto(menu.getName(), order.getCount(menu), order.sumPriceBy(menu)))
                 .collect(Collectors.toList());
+    }
+
+    public void initializeOrder(int tableNumber) {
+        Table table = TableRepository.findById(tableNumber);
+        orderRepository.initialize(table);
     }
 }

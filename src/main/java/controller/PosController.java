@@ -1,8 +1,10 @@
 package controller;
 
+import controller.dto.OrderResponseDto;
 import domain.command.Command;
 import domain.menu.Menu;
 import domain.menu.MenuRepository;
+import domain.pay.PaymentMethod;
 import domain.price.Price;
 import service.PosService;
 import view.InputView;
@@ -56,9 +58,10 @@ public class PosController {
         final int tableNumber = InputView.inputTableNumber();
         final List<OrderResponseDto> orders = posService.getOrderResponseDto(tableNumber);
         OutputView.printOrders(orders);
-        final int paymentMethod = InputView.inputPaymentMethod(tableNumber);
+        final PaymentMethod paymentMethod = InputView.inputPaymentMethod(tableNumber);
         Price price = posService.calculatePrice(tableNumber, paymentMethod);
         OutputView.printPrice(price);
+        posService.initializeOrder(tableNumber);
     }
 
     private void exit() {

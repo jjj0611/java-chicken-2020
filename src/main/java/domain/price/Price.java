@@ -1,5 +1,7 @@
 package domain.price;
 
+import java.util.Objects;
+
 public class Price {
     private static final int MINIMUM_PRICE = 0;
     private final int value;
@@ -41,5 +43,18 @@ public class Price {
 
     public Price minus(Price price) {
         return new Price(this.value - price.value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Price price = (Price) o;
+        return value == price.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }

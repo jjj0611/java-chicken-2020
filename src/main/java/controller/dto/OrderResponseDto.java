@@ -1,4 +1,4 @@
-package controller;
+package controller.dto;
 
 public class OrderResponseDto {
     private String menu;
