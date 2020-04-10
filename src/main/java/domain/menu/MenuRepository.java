@@ -6,6 +6,7 @@ import java.util.List;
 
 public class MenuRepository {
     private static final List<Menu> menus = new ArrayList<>();
+    private static final int INDEX_DIFFERENCE = 1;
 
     static {
         menus.add(new Menu(1, "후라이드", Category.CHICKEN, 16_000));
@@ -16,6 +17,14 @@ public class MenuRepository {
         menus.add(new Menu(6, "순살치킨", Category.CHICKEN, 17_000));
         menus.add(new Menu(21, "콜라", Category.BEVERAGE, 1_000));
         menus.add(new Menu(22, "사이다", Category.BEVERAGE, 1_000));
+    }
+
+    public static Menu findById(int number) {
+        try {
+            return menus.get(number - INDEX_DIFFERENCE);
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException("존재 하지 않는 메뉴 번호입니다.");
+        }
     }
 
     public static List<Menu> menus() {
