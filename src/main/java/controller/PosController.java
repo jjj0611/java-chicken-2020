@@ -3,6 +3,7 @@ package controller;
 import domain.command.Command;
 import domain.menu.Menu;
 import domain.menu.MenuRepository;
+import domain.price.Price;
 import service.PosService;
 import view.InputView;
 import view.OutputView;
@@ -56,7 +57,8 @@ public class PosController {
         final List<OrderResponseDto> orders = posService.getOrderResponseDto(tableNumber);
         OutputView.printOrders(orders);
         final int paymentMethod = InputView.inputPaymentMethod(tableNumber);
-        posService.calculatePrice(tableNumber, paymentMethod);
+        Price price = posService.calculatePrice(tableNumber, paymentMethod);
+        OutputView.printPrice(price);
     }
 
     private void exit() {

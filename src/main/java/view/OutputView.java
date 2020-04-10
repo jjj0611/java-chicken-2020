@@ -3,6 +3,7 @@ package view;
 import controller.OrderResponseDto;
 import controller.TableResponseDto;
 import domain.menu.Menu;
+import domain.price.Price;
 
 import java.util.List;
 
@@ -62,5 +63,10 @@ public class OutputView {
         for (OrderResponseDto order : orders) {
             System.out.printf(ORDER_FORMAT, order.getMenu(), order.getCount(), order.getPrice());
         }
+    }
+
+    public static void printPrice(Price price) {
+        System.out.println("## 최종 결제할 금액");
+        System.out.println(price.getValue() + "원");
     }
 }

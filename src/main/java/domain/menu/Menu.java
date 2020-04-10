@@ -17,7 +17,7 @@ public class Menu {
 
     @Override
     public String toString() {
-        return category + " " + number + " - " + name + " : " + price + "원";
+        return category + " " + number + " - " + name + " : " + price.getValue() + "원";
     }
 
     public boolean isChicken() {
@@ -28,7 +28,7 @@ public class Menu {
         return name;
     }
 
-    public int getPrice() {
-        return price.getValue();
+    public Price getPrice() {
+        return price;
     }
 }

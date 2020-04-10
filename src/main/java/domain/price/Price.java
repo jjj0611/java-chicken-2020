@@ -9,6 +9,10 @@ public class Price {
         this.value = value;
     }
 
+    private Price(double value) {
+        this((int) value);
+    }
+
     public static Price of(int value) {
         return new Price(value);
     }
@@ -21,5 +25,21 @@ public class Price {
 
     public int getValue() {
         return value;
+    }
+
+    public Price multiply(int number) {
+        return new Price(value * number);
+    }
+
+    public Price multiply(double number) {
+        return new Price(value * number);
+    }
+
+    public Price plus(Price price) {
+        return new Price(this.value + price.value);
+    }
+
+    public Price minus(Price price) {
+        return new Price(this.value - price.value);
     }
 }

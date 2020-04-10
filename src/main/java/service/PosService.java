@@ -6,6 +6,7 @@ import domain.menu.Menu;
 import domain.menu.MenuRepository;
 import domain.order.Order;
 import domain.order.OrderRepository;
+import domain.price.Price;
 import domain.table.Table;
 import domain.table.TableRepository;
 
@@ -22,6 +23,12 @@ public class PosService {
         orderRepository.placeOrder(table, menu, menuCount);
     }
 
+    public Price calculatePrice(int tableNumber, int paymentMethod) {
+        Table table = TableRepository.findById(tableNumber);
+        Order order = orderRepository.findByTable(table);
+        return order.calculatePrice(paymentMethod);
+    }
+
     public List<TableResponseDto> getTableResponseDto() {
         return TableRepository.tables()
                 .stream()
@@ -35,13 +42,7 @@ public class PosService {
         return MenuRepository.menus()
                 .stream()
                 .filter(order::hasMenu)
-                .map(menu -> new OrderResponseDto(menu.getName(), order.getCount(menu), order.sumPrice(menu)))
+                .map(menu -> new OrderResponseDto(menu.getName(), order.getCount(menu), order.sumPriceBy(menu)))
                 .collect(Collectors.toList());
-    }
-
-    public void calculatePrice(int tableNumber, int paymentMethod) {
-        Table table = TableRepository.findById(tableNumber);
-        Order order = orderRepository.findByTable(table);
-
     }
 }
