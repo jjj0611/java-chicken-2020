@@ -31,4 +31,28 @@ class CommandTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 명령어입니다.");
     }
+
+    @Test
+    void orderByNumber() {
+        Command command = Command.of(1);
+        assertThat(command).isEqualTo(Command.ORDER);
+    }
+
+    @Test
+    void payByNumber() {
+        Command command = Command.of(2);
+        assertThat(command).isEqualTo(Command.PAY);
+    }
+
+    @Test
+    void exitByNumber() {
+        Command command = Command.of(3);
+        assertThat(command).isEqualTo(Command.EXIT);
+    }
+
+    @Test
+    void exceptionByNumber() {
+        assertThatThrownBy(() -> Command.of(4))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
