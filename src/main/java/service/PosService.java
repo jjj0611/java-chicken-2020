@@ -1,8 +1,10 @@
 package service;
 
+import controller.OrderResponseDto;
 import controller.TableResponseDto;
 import domain.menu.Menu;
 import domain.menu.MenuRepository;
+import domain.order.Order;
 import domain.order.OrderRepository;
 import domain.table.Table;
 import domain.table.TableRepository;
@@ -25,5 +27,21 @@ public class PosService {
                 .stream()
                 .map(table -> new TableResponseDto(table.getNumber(), orderRepository.isEmpty(table)))
                 .collect(Collectors.toList());
+    }
+
+    public List<OrderResponseDto> getOrderResponseDto(int tableNumber) {
+        Table table = TableRepository.findById(tableNumber);
+        Order order = orderRepository.findByTable(table);
+        return MenuRepository.menus()
+                .stream()
+                .filter(order::hasMenu)
+                .map(menu -> new OrderResponseDto(menu.getName(), order.getCount(menu), order.sumPrice(menu)))
+                .collect(Collectors.toList());
+    }
+
+    public void calculatePrice(int tableNumber, int paymentMethod) {
+        Table table = TableRepository.findById(tableNumber);
+        Order order = orderRepository.findByTable(table);
+
     }
 }

@@ -9,6 +9,7 @@ public class Order {
     private static final int MAX_ORDER_COUNT = 100;
     private static final int MINIMUM_COUNT = 0;
     private static final int NOT_EXISTING_COUNT = 0;
+    private static final int PRICE_DISCOUNT_PER_TEN_CHICKEN = 10000;
 
     private Map<Menu, Integer> menuCount = new HashMap<>();
 
@@ -44,5 +45,27 @@ public class Order {
         if (totalCount + additionalCount >= MAX_ORDER_COUNT) {
             throw new IllegalArgumentException("주문은 최대 99개까지 가능합니다.");
         }
+    }
+
+    public int calculatePrice() {
+
+        int chickenCounts = (int) menuCount.keySet()
+                .stream()
+                .filter(Menu::isChicken)
+                .count();
+
+        return 0;
+    }
+
+    public boolean hasMenu(Menu menu) {
+        return menuCount.containsKey(menu);
+    }
+
+    public int getCount(Menu menu) {
+        return menuCount.get(menu);
+    }
+
+    public int sumPrice(Menu menu) {
+        return menu.getPrice() * menuCount.get(menu);
     }
 }

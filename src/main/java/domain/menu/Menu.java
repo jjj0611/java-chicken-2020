@@ -1,12 +1,14 @@
 package domain.menu;
 
+import domain.price.Price;
+
 public class Menu {
     private final int number;
     private final String name;
     private final Category category;
-    private final int price;
+    private final Price price;
 
-    public Menu(final int number, final String name, final Category category, final int price) {
+    public Menu(final int number, final String name, final Category category, final Price price) {
         this.number = number;
         this.name = name;
         this.category = category;
@@ -16,5 +18,17 @@ public class Menu {
     @Override
     public String toString() {
         return category + " " + number + " - " + name + " : " + price + "원";
+    }
+
+    public boolean isChicken() {
+        return category.equals(Category.CHICKEN);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price.getValue();
     }
 }

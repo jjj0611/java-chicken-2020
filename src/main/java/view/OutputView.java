@@ -1,5 +1,6 @@
 package view;
 
+import controller.OrderResponseDto;
 import controller.TableResponseDto;
 import domain.menu.Menu;
 
@@ -54,5 +55,12 @@ public class OutputView {
             return "-";
         }
         return "₩";
+    }
+
+    public static void printOrders(List<OrderResponseDto> orders) {
+        System.out.println("메뉴 수량 금액");
+        for (OrderResponseDto order : orders) {
+            System.out.printf(ORDER_FORMAT, order.getMenu(), order.getCount(), order.getPrice());
+        }
     }
 }

@@ -51,6 +51,12 @@ public class PosController {
     }
 
     private void pay() {
+        OutputView.printTables(posService.getTableResponseDto());
+        final int tableNumber = InputView.inputTableNumber();
+        final List<OrderResponseDto> orders = posService.getOrderResponseDto(tableNumber);
+        OutputView.printOrders(orders);
+        final int paymentMethod = InputView.inputPaymentMethod(tableNumber);
+        posService.calculatePrice(tableNumber, paymentMethod);
     }
 
     private void exit() {
