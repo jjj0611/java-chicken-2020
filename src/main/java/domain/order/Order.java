@@ -4,11 +4,11 @@ import domain.menu.Menu;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class Order {
     private static final int MAX_ORDER_COUNT = 100;
     private static final int MINIMUM_COUNT = 0;
+    private static final int NOT_EXISTING_COUNT = 0;
 
     private Map<Menu, Integer> menuCount = new HashMap<>();
 
@@ -19,12 +19,19 @@ public class Order {
         menuCount.putIfAbsent(menu, additionalCount);
     }
 
+    public boolean isEmpty() {
+        int totalCount = menuCount.values()
+                .stream()
+                .reduce(Integer::sum)
+                .orElse(0);
+        return totalCount == NOT_EXISTING_COUNT;
+    }
+
     private void validateMenuCount(Menu menu, int additionalCount) {
-        Integer count = menuCount.get(menu);
-        if (!Objects.isNull(count) && count + additionalCount < MINIMUM_COUNT) {
+        if (menuCount.containsKey(menu) && menuCount.get(menu) + additionalCount < MINIMUM_COUNT) {
             throw new IllegalArgumentException("메뉴 개수는 음수일 수 없습니다.");
         }
-        if (Objects.isNull(count) && additionalCount < MINIMUM_COUNT) {
+        if (!menuCount.containsKey(menu) && additionalCount < MINIMUM_COUNT) {
             throw new IllegalArgumentException("메뉴 개수는 음수일 수 없습니다.");
         }
     }

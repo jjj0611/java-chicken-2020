@@ -1,12 +1,21 @@
 package controller;
 
 import domain.command.Command;
+import domain.menu.Menu;
+import domain.menu.MenuRepository;
+import service.PosService;
 import view.InputView;
+import view.OutputView;
+
+import java.util.List;
 
 public class PosController {
 
+    private PosService posService = new PosService();
+    private boolean exit = false;
+
     public void run() {
-        while (true) {
+        while (!exit) {
             runCommand();
         }
     }
@@ -32,15 +41,20 @@ public class PosController {
     }
 
     private void order() {
-
+        OutputView.printTables(posService.getTableResponseDto());
+        final int tableNumber = InputView.inputTableNumber();
+        final List<Menu> menus = MenuRepository.menus();
+        OutputView.printMenus(menus);
+        final int menuNumber = InputView.inputMenuNumber();
+        final int menuCount = InputView.inputMenuCount();
+        posService.placeOrder(tableNumber, menuNumber, menuCount);
     }
 
     private void pay() {
-
     }
 
     private void exit() {
-
+        exit = true;
     }
 
 }
